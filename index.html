@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>CMD Text Animation with CMD-Style Button</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+  }
+
+  /* хули смотришь */
+  #background {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 25% 25%, rgba(0,255,255,0.2), transparent 40%),
+                radial-gradient(circle at 75% 75%, rgba(0,255,255,0.2), transparent 40%);
+    z-index: 0;
+    animation: moveBG 20s linear infinite;
+  }
+
+  @keyframes moveBG {
+    0% { transform: translate(0%, 0%); }
+    50% { transform: translate(10%, -10%); }
+    100% { transform: translate(0%, 0%); }
+  }
+
+  #text {
+    white-space: pre;
+    font-size: 23px;
+    line-height: 1.2;
+    z-index: 1;
+  }
+
+  /* кнопка */
+  #telegramBtn {
+    display: none;
+    margin-top: 20px;
+    padding: 5px 10px;
+    font-family: monospace;
+    font-size: 20px;
+    color: #fff;
+    background: #000;
+    border: 2px solid #fff;
+    cursor: pointer;
+    z-index: 1;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  #telegramBtn:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  /* Контейнер для текста и кнопки */
+  #container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>
+</head>
+<body>
+<div id="background"></div>
+<div id="container">
+  <pre id="text"></pre>
+  <button id="telegramBtn" onclick="window.location.href='https://t.me/gam0ware'">
+    JOIN TELEGRAM
+  </button>
+</div>
+
+<script>
+const content = `
+  :::     :::     :::     :::::::::  ::::::::: 
+ :+:     :+:   :+: :+:   :+:    :+: :+:    :+: 
+:+:+     +:+  +:+   +:+  +:+    +:+ +:+    +:+  
++#+     +:+ +#++:++#++: +#++:++#:  +#++:++#+    
++#+   +#+  +#+     +#+ +#+    +#+ +#+           
+#+##+#+#   #+#     #+# #+#    #+# #+#            
+
+Hello World, this is a Varp command script,
+it will be absolutely free.
+Join in our telegram channel t.me/gam0ware
+`;
+
+const textEl = document.getElementById('text');
+const telegramBtn = document.getElementById('telegramBtn');
+let lines = content.split('\n');
+let currentLine = 0;
+let charIndex = 0;
+
+function typeLine() {
+  if (currentLine < lines.length) {
+    if (charIndex < lines[currentLine].length) {
+      textEl.textContent += lines[currentLine][charIndex];
+      charIndex++;
+      setTimeout(typeLine, 10);
+    } else {
+      textEl.textContent += '\n';
+      currentLine++;
+      charIndex = 0;
+      setTimeout(typeLine, 10);
+    }
+  } else {
+    // Показываем кнопку после завершения текста
+    telegramBtn.style.display = 'inline-block';
+  }
+}
+
+typeLine();
+</script>
+</body>
+</html>
+
